@@ -1,0 +1,1014 @@
+---
+title: "Semana 7 Task"
+author: "Jorge De La Garza"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+####### GBS #########
+
+# PITCH
+
+## lectura de tablas
+```{r}
+T0_pitch_gbs = read.csv("T0_pitch_gb.csv")
+T1_pitch_gbs = read.csv("T1_pitch_gb.csv")
+#str(T0_pitch)
+#str(T1_pitch)
+names(T0_pitch_gbs)
+```
+```{r}
+install.packages(c("pwr", "effectsize"))
+library(pwr)
+library(effectsize)
+```
+
+# Análisis de HITS
+
+## diferencia
+```{r}
+df_pitch_gb_hits = data.frame(
+  Pre = T0_pitch_gbs$Hits,
+  Post = T1_pitch_gbs$Hits
+)
+df_pitch_gb_hits$diff = df_pitch_gb_hits$Post - df_pitch_gb_hits$Pre
+```
+
+## test de normalidad
+```{r}
+#Shapiro-wilk test
+shapiro_pitch_gb_hits = shapiro.test(df_pitch_gb_hits$diff)
+print(shapiro_pitch_gb_hits)
+```
+// p-value > 0.05 --> Paramétricos //
+
+## significancia
+```{r}
+#t-test
+t_test_pitch_gb_hits = t.test(df_pitch_gb_hits$Post, df_pitch_gb_hits$Pre, paired = TRUE)
+print(t_test_pitch_gb_hits)
+```
+## effect size
+```{r}
+#Cohens D
+d_pitch_gb_hits = repeated_measures_d(df_pitch_gb_hits$Post, df_pitch_gb_hits$Pre, paired = TRUE)
+print(d_pitch_gb_hits)
+```
+## potencia
+```{r}
+power_pitch_gb_hits = pwr.t.test(
+  n = nrow(df_pitch_gb_hits),
+  d = d_pitch_gb_hits$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_pitch_gb_hits)
+```
+
+# Análisis MRT
+
+## diferencia
+```{r}
+df_pitch_gb_MRT = data.frame(
+  Pre = T0_pitch_gbs$MRT,
+  Post = T1_pitch_gbs$MRT
+)
+df_pitch_gb_MRT$diff = df_pitch_gb_MRT$Post - df_pitch_gb_MRT$Pre
+```
+
+## test de normalidad
+```{r}
+# shapiro-wilk 
+shapiro_pitch_gb_MRT = shapiro.test(df_pitch_gb_MRT$diff)
+print(shapiro_pitch_gb_MRT)
+```
+// p-value > 0.05 --> paramétricos //
+
+## significancia
+```{r}
+#t test
+t_test_pitch_gb_MRT = t.test(df_pitch_gb_MRT$Post, df_pitch_gb_MRT$Pre, paired = TRUE)
+print(t_test_pitch_gb_MRT)
+```
+## effect size
+```{r}
+#cohens d
+d_pitch_gb_MRT = repeated_measures_d(df_pitch_gb_MRT$Post, df_pitch_gb_MRT$Pre, paired = TRUE)
+print(d_pitch_gb_MRT)
+```
+## potencia
+```{r}
+power_pitch_gb_MRT = pwr.t.test(
+  n = nrow(df_pitch_gb_MRT),
+  d = d_pitch_gb_MRT$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_pitch_gb_MRT)
+```
+# Análisis de Amp ERP
+
+## diferencia
+```{r}
+df_pitch_gb_AmpERP = data.frame(
+  Pre = T0_pitch_gbs$Amp.ERP,
+  Post = T1_pitch_gbs$Amp.ERP
+)
+df_pitch_gb_AmpERP$diff = df_pitch_gb_AmpERP$Post - df_pitch_gb_AmpERP$Pre
+```
+
+## test de normalidad
+```{r}
+#shapiro-wilk
+shapiro_pitch_gb_AmpERP = shapiro.test(df_pitch_gb_AmpERP$diff)
+print(shapiro_pitch_gb_AmpERP)
+```
+// p-value > 0.05 --> paramétricos //
+
+## significancia
+```{r}
+#t test
+t_test_pitch_gb_AmpERP = t.test(df_pitch_gb_AmpERP$Post, df_pitch_gb_AmpERP$Pre, paired = TRUE)
+print(t_test_pitch_gb_AmpERP)
+```
+## effect size
+```{r}
+# cohens d
+d_pitch_gb_AmpERP = repeated_measures_d(df_pitch_gb_AmpERP$Post, df_pitch_gb_AmpERP$Pre, paired = TRUE)
+print(d_pitch_gb_AmpERP)
+```
+## potencia
+```{r}
+power_pitch_gb_AmpERP = pwr.t.test(
+  n = nrow(df_pitch_gb_AmpERP),
+  d = d_pitch_gb_AmpERP$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_pitch_gb_AmpERP)
+```
+# Análisis Theta
+
+## diferencia
+```{r}
+df_pitch_gb_theta = data.frame(
+  Pre = T0_pitch_gbs$Theta..Relativo.,
+  Post = T1_pitch_gbs$Theta..Relativo.
+)
+df_pitch_gb_theta$diff = df_pitch_gb_theta$Post - df_pitch_gb_theta$Pre
+```
+
+## test de normalidad
+```{r}
+#shapiro-wilk
+shapiro_pitch_gb_theta = shapiro.test(df_pitch_gb_theta$diff)
+print(shapiro_pitch_gb_theta)
+```
+// p-value > 0.05 --> paramétricos //
+
+## significancia
+```{r}
+#t test
+t_test_pitch_gb_theta = t.test(df_pitch_gb_theta$Post, df_pitch_gb_theta$Pre, paired = TRUE)
+print(t_test_pitch_gb_theta)
+```
+## effect size
+```{r}
+d_pitch_gb_theta = repeated_measures_d(df_pitch_gb_theta$Post, df_pitch_gb_theta$Pre, paired = TRUE)
+print(d_pitch_gb_theta)
+```
+## potencia
+```{r}
+power_pitch_gb_theta = pwr.t.test(
+  n = nrow(df_pitch_gb_theta),
+  d = d_pitch_gb_theta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_pitch_gb_theta)
+```
+# Análisis Alpha
+
+## diferencia
+```{r}
+df_pitch_gb_alpha = data.frame(
+  Pre = T0_pitch_gbs$Alpha.power..Relativo.,
+  Post = T1_pitch_gbs$Alpha.power..Relativo.
+)
+df_pitch_gb_alpha$diff = df_pitch_gb_alpha$Post - df_pitch_gb_alpha$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_pitch_gb_alpha = shapiro.test(df_pitch_gb_alpha$diff)
+print(shapiro_pitch_gb_alpha)
+```
+// p-value > 0.05 --> paramétricos //
+
+## significancia
+```{r}
+#t test
+t_test_pitch_gb_alpha = t.test(df_pitch_gb_alpha$Post, df_pitch_gb_alpha$Pre, paired = TRUE)
+print(t_test_pitch_gb_alpha)
+```
+## effect size
+```{r}
+d_pitch_gb_alpha = repeated_measures_d(df_pitch_gb_alpha$Post, df_pitch_gb_alpha$Pre, paired = TRUE)
+print(d_pitch_gb_alpha)
+```
+
+## potencia
+```{r}
+power_pitch_gb_alpha = pwr.t.test(
+  n = nrow(df_pitch_gb_alpha),
+  d = d_pitch_gb_alpha$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_pitch_gb_alpha)
+```
+# Análisis Lower Beta
+
+## diferencia
+```{r}
+df_pitch_gb_beta = data.frame(
+  Pre = T0_pitch_gbs$Lower.Beta.power..Relativo.,
+  Post = T1_pitch_gbs$Lower.Beta.power..Relativo.
+)
+df_pitch_gb_beta$diff = df_pitch_gb_beta$Post - df_pitch_gb_beta$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_pitch_gb_beta = shapiro.test(df_pitch_gb_beta$diff)
+print(shapiro_pitch_gb_beta)
+```
+// p-value > 0.05 --> paramétrico //
+
+## significancia
+```{r}
+#t test
+t_test_pitch_gb_beta = t.test(df_pitch_gb_beta$Post, df_pitch_gb_beta$Pre, paired = TRUE)
+print(t_test_pitch_gb_beta)
+```
+## effect size
+```{r}
+#t test
+d_pitch_gb_beta = repeated_measures_d(df_pitch_gb_beta$Post, df_pitch_gb_beta$Pre, paired = TRUE)
+print(d_pitch_gb_beta)
+```
+## potencia 
+```{r}
+power_pitch_gb_beta = pwr.t.test(
+  n = nrow(df_pitch_gb_beta),
+  d = d_pitch_gb_beta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_pitch_gb_beta)
+```
+
+# INTENSITY
+
+## lectura de tablas
+```{r}
+T0_intensity_gbs = read.csv("T0_intensity_gb.csv")
+T1_intensity_gbs = read.csv("T1_intensity_gb.csv")
+```
+
+# Análisis de Hits
+
+## diferencia
+```{r}
+df_intensity_gb_hits = data.frame(
+  Pre = T0_intensity_gbs$Hits,
+  Post = T1_intensity_gbs$Hits
+)
+df_intensity_gb_hits$diff = df_intensity_gb_hits$Post - df_intensity_gb_hits$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_intensity_gb_hits = shapiro.test(df_intensity_gb_hits$diff)
+print(shapiro_intensity_gb_hits)
+```
+ // p-value > 0.05 --> paramétricos //
+ 
+## significancia
+```{r}
+#t test
+t_test_intensity_gb_hits = t.test(df_intensity_gb_hits$Post, df_intensity_gb_hits$Pre, paired = TRUE)
+print(t_test_intensity_gb_hits)
+```
+## effect size
+```{r}
+d_intensity_gb_hits = repeated_measures_d(df_intensity_gb_hits$Post, df_intensity_gb_hits$Pre, paired = TRUE)
+print(d_intensity_gb_hits)
+```
+## potencia 
+```{r}
+power_intensity_gb_hits = pwr.t.test(
+  n = nrow(df_intensity_gb_hits),
+  d = d_intensity_gb_hits$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_intensity_gb_hits)
+```
+
+# Análisis de MRT
+
+## diferencia
+```{r}
+df_intensity_gb_MRT = data.frame(
+  Pre = T0_intensity_gbs$MRT,
+  Post = T1_intensity_gbs$MRT
+)
+df_intensity_gb_MRT$diff = df_intensity_gb_MRT$Post - df_intensity_gb_MRT$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_intensity_gb_MRT = shapiro.test(df_intensity_gb_MRT$diff)
+print(shapiro_intensity_gb_MRT)
+```
+// p-value > 0.05 ; paramétricos //
+
+## significancia
+```{r}
+t_test_intensity_gb_MRT = t.test(df_intensity_gb_MRT$Post, df_intensity_gb_MRT$Pre, paired = TRUE)
+print(t_test_intensity_gb_MRT)
+```
+## effect size
+```{r}
+d_intensity_gb_MRT = repeated_measures_d(df_intensity_gb_MRT$Post, df_intensity_gb_MRT$Pre, paired = TRUE)
+print(d_intensity_gb_MRT)
+```
+##potencia
+```{r}
+power_intensity_gb_MRT = pwr.t.test(
+  n = nrow(df_intensity_gb_MRT),
+  d = d_intensity_gb_MRT$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_intensity_gb_MRT)
+```
+## Análisis de AmpERP
+
+##diferencia
+```{r}
+df_intensity_gb_AmpERP = data.frame(
+  Pre = T0_intensity_gbs$Amp.ERP,
+  Post = T1_intensity_gbs$Amp.ERP
+)
+df_intensity_gb_AmpERP$diff = df_intensity_gb_AmpERP$Post - df_intensity_gb_AmpERP$Pre
+```
+
+##test de normalidad
+```{r}
+shapiro_intensity_gb_AmpERP = shapiro.test(df_intensity_gb_AmpERP$diff)
+print(shapiro_intensity_gb_AmpERP)
+```
+// p-value > 0.05 ; paramétrico //
+
+##significancia
+```{r}
+t_test_intensity_gb_AmpERP = t.test(df_intensity_gb_AmpERP$Post, df_intensity_gb_AmpERP$Pre, paired = TRUE)
+print(t_test_intensity_gb_AmpERP)
+```
+## effect size
+```{r}
+d_intensity_gb_AmpERP = repeated_measures_d(df_intensity_gb_AmpERP$Post, df_intensity_gb_AmpERP$Pre, paired = TRUE)
+print(d_intensity_gb_AmpERP)
+```
+##potencia
+```{r}
+power_intensity_gb_AmpERP = pwr.t.test(
+  n = nrow(df_intensity_gb_AmpERP),
+  d = d_intensity_gb_AmpERP$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_intensity_gb_AmpERP)
+```
+# Análisis de Theta
+
+## diferencia
+```{r}
+df_intensity_gb_theta = data.frame(
+  Pre = T0_intensity_gbs$Theta..Relativo.,
+  Post = T1_intensity_gbs$Theta..Relativo.
+)
+df_intensity_gb_theta$diff = df_intensity_gb_theta$Post - df_intensity_gb_theta$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_intensity_gb_theta = shapiro.test(df_intensity_gb_theta$diff)
+print(shapiro_intensity_gb_theta)
+```
+// p-value < 0.05 ; no paramétricos //
+
+## significancia (Wilcoxon)
+```{r}
+wilcoxon_intensity_gb_theta = wilcox.test(df_intensity_gb_theta$Post, df_intensity_gb_theta$Pre, paired = TRUE, exact = FALSE)
+print(wilcoxon_intensity_gb_theta)
+```
+## effect size
+```{r}
+rb_intensity_gb_theta = rank_biserial(df_intensity_gb_theta$Post, df_intensity_gb_theta$Pre, paired = TRUE)
+print(rb_intensity_gb_theta)
+```
+##potencia
+```{r}
+power_intensity_gb_theta = pwr.t.test(
+  n = nrow(df_intensity_gb_theta),
+  d = rb_intensity_gb_theta$r_rank_biserial,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_intensity_gb_theta)
+```
+# análisis de Alpha
+
+##diferencia
+```{r}
+df_intensity_gb_alpha = data.frame(
+  Pre = T0_intensity_gbs$Alpha.power..Relativo.,
+  Post = T1_intensity_gbs$Alpha.power..Relativo.
+)
+df_intensity_gb_alpha$diff = df_intensity_gb_alpha$Post - df_intensity_gb_alpha$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_intensity_gb_alpha = shapiro.test(df_intensity_gb_alpha$diff)
+print(shapiro_intensity_gb_alpha)
+```
+// p-value > 0.05 ; paramétricos //
+
+## significancia
+```{r}
+t_test_intensity_gb_alpha = t.test(df_intensity_gb_alpha$Post, df_intensity_gb_alpha$Pre, paired = TRUE)
+print(t_test_intensity_gb_alpha)
+```
+## effect size
+```{r}
+d_intensity_gb_alpha = repeated_measures_d(df_intensity_gb_alpha$Post, df_intensity_gb_alpha$Pre, paired = TRUE)
+print(d_intensity_gb_alpha)
+```
+## potencia
+```{r}
+power_intensity_gb_alpha = pwr.t.test(
+  n = nrow(df_intensity_gb_alpha),
+  d = d_intensity_gb_alpha$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_intensity_gb_alpha)
+```
+# Análisis de Beta
+
+## diferencia
+```{r}
+df_intensity_gb_beta = data.frame(
+  Pre = T0_intensity_gbs$Lower.Beta.power..Relativo.,
+  Post = T1_intensity_gbs$Lower.Beta.power..Relativo.
+)
+df_intensity_gb_beta$diff = df_intensity_gb_beta$Post - df_intensity_gb_beta$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_intensity_gb_beta = shapiro.test(df_intensity_gb_beta$diff)
+print(shapiro_intensity_gb_beta)
+```
+// p-value > 0.05 ; paramétrico //
+
+## significancia
+```{r}
+t_test_intensity_gb_beta = t.test(df_intensity_gb_beta$Post, df_intensity_gb_beta$Pre, paired = TRUE)
+print(t_test_intensity_gb_beta)
+```
+## effect size
+```{r}
+d_intensity_gb_beta = repeated_measures_d(df_intensity_gb_beta$Post, df_intensity_gb_beta$Pre, paired = TRUE)
+print(d_intensity_gb_beta)
+```
+## potencia
+```{r}
+power_intensity_gb_beta = pwr.t.test(
+  n = nrow(df_intensity_gb_beta),
+  d = d_intensity_gb_beta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_intensity_gb_beta)
+```
+
+# DURATION
+
+## lectura de tablas
+```{r}
+T0_duration_gbs = read.csv("T0_duration_gb.csv")
+T1_duration_gbs = read.csv("T1_duration_gb.csv")
+```
+
+# Análisis de HITS
+
+##diferencia
+```{r}
+df_duration_gb_hits = data.frame(
+  Pre = T0_duration_gbs$Hits,
+  Post = T1_duration_gbs$Hits
+)
+df_duration_gb_hits$diff = df_duration_gb_hits$Post - df_duration_gb_hits$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_duration_gb_hits = shapiro.test(df_duration_gb_hits$diff)
+print(shapiro_duration_gb_hits)
+```
+// p -value > 0.05 ; paramétricos //
+
+## significancia
+```{r}
+t_test_duration_gb_hits = t.test(df_duration_gb_hits$Post, df_duration_gb_hits$Pre, paired = TRUE)
+print(t_test_duration_gb_hits)
+```
+## Effect size
+```{r}
+d_duration_gb_hits = repeated_measures_d(df_duration_gb_hits$Post, df_duration_gb_hits$Pre, paired = TRUE)
+print(d_duration_gb_hits)
+```
+## Potencia
+```{r}
+power_duration_gb_hits = pwr.t.test(
+  n = nrow(df_duration_gb_hits),
+  d = d_duration_gb_hits$d_rm,
+  sig.level = 0.05,
+  power =NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_duration_gb_hits)
+```
+
+# Análisis de MRT
+
+## diferencia
+```{r}
+df_duration_gb_MRT = data.frame(
+  Pre = T0_duration_gbs$MRT,
+  Post = T1_duration_gbs$MRT
+)
+df_duration_gb_MRT$diff = df_duration_gb_MRT$Post - df_duration_gb_MRT$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_duration_gb_MRT = shapiro.test(df_duration_gb_MRT$diff)
+print(shapiro_duration_gb_MRT)
+```
+// p-value > 0.05 ; paramétricos //
+
+## significancia
+```{r}
+t_test_duration_gb_MRT = t.test(df_duration_gb_MRT$Post, df_duration_gb_MRT$Pre, paired = TRUE)
+print(t_test_duration_gb_MRT)
+```
+## effect size
+```{r}
+d_duration_gb_MRT = repeated_measures_d(df_duration_gb_MRT$Post, df_duration_gb_MRT$Pre, paired = TRUE)
+print(d_duration_gb_MRT)
+```
+## potencia
+```{r}
+power_duration_gb_MRT = pwr.t.test(
+  n = nrow(df_duration_gb_MRT),
+  d = d_duration_gb_MRT$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_duration_gb_MRT)
+```
+# Análisis de AmpERP
+
+## diferencia
+```{r}
+df_duration_gb_AmpERP = data.frame(
+  Pre = T0_duration_gbs$Amp.ERP,
+  Post = T1_duration_gbs$Amp.ERP
+)
+df_duration_gb_AmpERP$diff = df_duration_gb_AmpERP$Post - df_duration_gb_AmpERP$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_duration_gb_AmpERP = shapiro.test(df_duration_gb_AmpERP$diff)
+print(shapiro_duration_gb_AmpERP)
+```
+// p-value > 0.05 ; paramétricos //
+
+## significancia
+```{r}
+t_test_duration_gb_AmpERP = t.test(df_duration_gb_AmpERP$Post, df_duration_gb_AmpERP$Pre, paired = TRUE)
+print(t_test_duration_gb_AmpERP)
+```
+## effect size
+```{r}
+d_duration_gb_AmpERP = repeated_measures_d(df_duration_gb_AmpERP$Post, df_duration_gb_AmpERP$Pre, paired = TRUE)
+print(d_duration_gb_AmpERP)
+```
+## potencia
+```{r}
+power_duration_gb_AmpERP = pwr.t.test(
+  n = nrow(df_duration_gb_AmpERP),
+  d = d_duration_gb_AmpERP$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_duration_gb_AmpERP)
+```
+
+# Análisis de theta
+
+## diferencia
+```{r}
+df_duration_gb_theta = data.frame(
+  Pre = T0_duration_gbs$Theta..Relativo.,
+  Post = T1_duration_gbs$Theta..Relativo.
+)
+df_duration_gb_theta$diff = df_duration_gb_theta$Post - df_duration_gb_theta$Pre
+```
+
+## Test de normalidad
+```{r}
+shapiro_duration_gb_theta = shapiro.test(df_duration_gb_theta$diff)
+print(shapiro_duration_gb_theta)
+```
+// p-value > 0.05 ; paramétrico //
+
+## significancia
+```{r}
+t_test_duration_gb_theta = t.test(df_duration_gb_theta$Post, df_duration_gb_theta$Pre, paired = TRUE)
+print(t_test_duration_gb_theta)
+```
+## effect size
+```{r}
+d_duration_gb_theta = repeated_measures_d(df_duration_gb_theta$Post, df_duration_gb_theta$Pre, paired = TRUE)
+print(d_duration_gb_theta)
+```
+## potencia
+```{r}
+power_duration_gb_theta = pwr.t.test(
+  n = nrow(df_duration_gb_theta),
+  d = d_duration_gb_theta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_duration_gb_theta)
+```
+# Análisis de Alpha
+
+## diferencia
+```{r}
+df_duration_gb_alpha = data.frame(
+  Pre = T0_duration_gbs$Alpha.power..Relativo.,
+  Post = T1_duration_gbs$Alpha.power..Relativo.
+)
+df_duration_gb_alpha$diff = df_duration_gb_alpha$Post - df_duration_gb_alpha$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_duration_gb_alpha = shapiro.test(df_duration_gb_alpha$diff)
+print(shapiro_duration_gb_alpha)
+```
+// p-value > 0.05 ; paramétricos //
+
+## significancia
+```{r}
+t_test_duration_gb_alpha = t.test(df_duration_gb_alpha$Post, df_duration_gb_alpha$Pre, paired = TRUE)
+print(t_test_duration_gb_alpha)
+```
+## effect size
+```{r}
+d_duration_gb_alpha = repeated_measures_d(df_duration_gb_alpha$Post, df_duration_gb_alpha$Pre, paired = TRUE)
+print(d_duration_gb_alpha)
+```
+## potencia
+```{r}
+power_duration_gb_alpha = pwr.t.test(
+  n = nrow(df_duration_gb_alpha),
+  d = d_duration_gb_alpha$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_duration_gb_alpha)
+```
+# Análisis de Beta
+
+## diferencia
+```{r}
+df_duration_gb_beta = data.frame(
+  Pre = T0_duration_gbs$Lower.Beta.power..Relativo.,
+  Post = T1_duration_gbs$Lower.Beta.power..Relativo.
+)
+df_duration_gb_beta$diff = df_duration_gb_beta$Post - df_duration_gb_beta$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_duration_gb_beta = shapiro.test(df_duration_gb_beta$diff)
+print(shapiro_duration_gb_beta)
+```
+// p-value > 0.05 ; paramétrico //
+
+## significancia
+```{r}
+t_test_duration_gb_beta = t.test(df_duration_gb_beta$Post, df_duration_gb_beta$Pre, paired = TRUE)
+print(t_test_duration_gb_beta)
+```
+## effect size
+```{r}
+d_duration_gb_beta = repeated_measures_d(df_duration_gb_beta$Post, df_duration_gb_beta$Pre, paired = TRUE)
+print(d_duration_gb_beta)
+```
+## potencia
+```{r}
+power_duration_gb_beta = pwr.t.test(
+  n = nrow(df_duration_gb_beta),
+  d = d_duration_gb_beta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_duration_gb_beta)
+```
+
+# POSITION
+
+## lectura de tablas
+```{r}
+T0_position_gbs = read.csv("T0_position_gb.csv")
+T1_position_gbs = read.csv("T1_position_gb.csv")
+```
+
+# Análisis de hits
+```{r}
+df_position_gb_hits = data.frame(
+  Pre = T0_position_gbs$Hits,
+  Post = T1_position_gbs$Hits
+)
+df_position_gb_hits$diff = df_position_gb_hits$Post - df_position_gb_hits$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_position_gb_hits = shapiro.test(df_position_gb_hits$diff)
+print(shapiro_position_gb_hits)
+```
+// p-value > 0.05 ; paramétricos //
+
+## significancia
+```{r}
+t_test_position_gb_hits = t.test(df_position_gb_hits$Post, df_position_gb_hits$Pre, paired = TRUE)
+print(t_test_position_gb_hits)
+```
+## effect size
+```{r}
+d_position_gb_hits = repeated_measures_d(df_position_gb_hits$Post, df_position_gb_hits$Pre, paired = TRUE)
+print(d_position_gb_hits)
+```
+## potencia
+```{r}
+power_position_gb_hits = pwr.t.test(
+  n = nrow(df_position_gb_hits),
+  d = d_position_gb_hits$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_position_gb_hits)
+```
+# Análisis de MRT
+
+##diferencia
+```{r}
+df_position_gb_MRT = data.frame(
+  Pre = T0_position_gbs$MRT,
+  Post = T1_position_gbs$MRT
+)
+df_position_gb_MRT$diff = df_position_gb_MRT$Post - df_position_gb_MRT$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_position_gb_MRT = shapiro.test(df_position_gb_MRT$diff)
+print(shapiro_position_gb_MRT)
+```
+// p-value < 0.05 ; no paramétrico //
+
+## significancia WILCOXON
+```{r}
+wilcoxon_position_gb_MRT = wilcox.test(df_position_gb_MRT$Post, df_position_gb_MRT$Pre, paired = TRUE, exact = FALSE)
+print(wilcoxon_position_gb_MRT)
+```
+## effect size
+```{r}
+rb_position_gb_MRT = rank_biserial(df_position_gb_MRT$Post, df_position_gb_MRT$Pre, paired = TRUE)
+print(rb_position_gb_MRT)
+```
+## potencia
+```{r}
+power_position_gb_MRT = pwr.t.test(
+  n = nrow(df_position_gb_MRT),
+  d = rb_position_gb_MRT$r_rank_biserial,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_position_gb_MRT)
+```
+# Análisis de AmpERP
+
+## diferencia
+```{r}
+df_position_gb_AmpERP = data.frame(
+  Pre = T0_position_gbs$Amp.ERP,
+  Post = T1_position_gbs$Amp.ERP
+)
+df_position_gb_AmpERP$diff = df_position_gb_AmpERP$Post - df_position_gb_AmpERP$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_position_gb_AmpERP = shapiro.test(df_position_gb_AmpERP$diff)
+print(shapiro_position_gb_AmpERP)
+```
+// p-value > 0.05 ; paramétrico //
+
+## significancia
+```{r}
+t_test_position_gb_AmpERP = t.test(df_position_gb_AmpERP$Post, df_position_gb_AmpERP$Pre, paired = TRUE)
+print(t_test_position_gb_AmpERP)
+```
+## effect size
+```{r}
+d_position_gb_AmpERP = repeated_measures_d(df_position_gb_AmpERP$Post, df_position_gb_AmpERP$Pre, paired = TRUE)
+print(d_position_gb_AmpERP)
+```
+## potencia
+```{r}
+power_position_gb_AmpERP = pwr.t.test(
+  n = nrow(df_position_gb_AmpERP),
+  d = d_position_gb_AmpERP$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_position_gb_AmpERP)
+```
+# Análisis de theta
+
+## diferencia
+```{r}
+df_position_gb_theta = data.frame(
+  Pre = T0_position_gbs$Theta..Relativo.,
+  Post = T1_position_gbs$Theta..Relativo.
+) 
+df_position_gb_theta$diff = df_position_gb_theta$Post - df_position_gb_theta$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_position_gb_theta = shapiro.test(df_position_gb_theta$diff)
+print(shapiro_position_gb_theta)
+```
+// p-value > 0.05 ; paramétrico //
+
+## significancia
+```{r}
+t_test_position_gb_theta = t.test(df_position_gb_theta$Post, df_position_gb_theta$Pre, paired = TRUE)
+print(t_test_position_gb_theta)
+```
+## effect size
+```{r}
+d_position_gb_theta = repeated_measures_d(df_position_gb_theta$Post, df_position_gb_theta$Pre, paired = TRUE)
+print(d_position_gb_theta)
+```
+## potencia
+```{r}
+power_position_gb_theta = pwr.t.test(
+  n = nrow(df_position_gb_theta),
+  d = d_position_gb_theta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_position_gb_theta)
+```
+# Análisis de alpha
+
+## diferencia
+```{r}
+df_position_gb_alpha = data.frame(
+  Pre = T0_position_gbs$Alpha.power..Relativo.,
+  Post = T1_position_gbs$Alpha.power..Relativo.
+)
+df_position_gb_alpha$diff = df_position_gb_alpha$Post - df_position_gb_alpha$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_position_gb_alpha = shapiro.test(df_position_gb_alpha$diff)
+print(shapiro_position_gb_alpha)
+```
+// p-value > 0.05 ; paramétrico //
+
+## significancia
+```{r}
+t_test_position_gb_alpha = t.test(df_position_gb_alpha$Post, df_position_gb_alpha$Pre, paired = TRUE)
+print(t_test_position_gb_alpha)
+```
+##  effect size
+```{r}
+d_position_gb_alpha = repeated_measures_d(df_position_gb_alpha$Post, df_position_gb_alpha$Pre, paired = TRUE)
+print(d_position_gb_alpha)
+```
+## potencia
+```{r}
+power_position_gb_alpha = pwr.t.test(
+  n = nrow(df_position_gb_alpha),
+  d = d_position_gb_alpha$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_position_gb_alpha)
+```
+# Análisis de Beta
+
+## diferencia
+```{r}
+df_position_gb_beta = data.frame(
+  Pre = T0_position_gbs$Lower.Beta.power..Relativo.,
+  Post = T1_position_gbs$Lower.Beta.power..Relativo.
+)
+df_position_gb_beta$diff = df_position_gb_beta$Post - df_position_gb_beta$Pre
+```
+
+## test de normalidad
+```{r}
+shapiro_position_gb_beta = shapiro.test(df_position_gb_beta$diff)
+print(shapiro_position_gb_beta)
+```
+// p-value > 0.05 ; paramétrico //
+
+## significancia
+```{r}
+t_test_position_gb_beta = t.test(df_position_gb_beta$Post, df_position_gb_beta$Pre, paired = TRUE)
+print(t_test_position_gb_beta)
+```
+## effect size
+```{r}
+d_position_gb_beta = repeated_measures_d(df_position_gb_beta$Post, df_position_gb_beta$Pre, paired = TRUE)
+print(d_position_gb_beta)
+```
+## potencia
+```{r}
+power_position_gb_beta = pwr.t.test(
+  n = nrow(df_position_gb_beta),
+  d = d_position_gb_beta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_position_gb_beta)
+```
