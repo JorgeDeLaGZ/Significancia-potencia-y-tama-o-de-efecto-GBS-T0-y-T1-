@@ -1,0 +1,1179 @@
+---
+title: Analisis de significancia, potencia y tamaño de efecto entre mean T0 y T1 por
+  cada feature
+author: "Jorge De La Garza"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# PITCH 
+
+## Lectura de tablas
+```{r}
+T0_pitch = read.csv("Cz_mean_T0_pitch.csv")
+T1_pitch = read.csv("Cz_mean_T1_pitch.csv")
+#str(T0)
+#str(T1)
+names(T0_pitch)
+names(T1_pitch)
+```
+```{r}
+install.packages(c("pwr", "effectsize"))
+library(pwr)
+library(effectsize)
+```
+
+### Análisis de HITS
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_pitch_hits = data.frame(
+  Pre = T0_pitch$Hits_0,
+  Post = T1_pitch$Hits_1
+)
+
+df_analysis_pitch_hits$diff = df_analysis_pitch_hits$Post - df_analysis_pitch_hits$Pre
+```
+
+#### corroboración: paramétrico o no paramétrico 
+```{r}
+# Normalidad (Shapiro-Wilk)
+## h0 = Distribución normal en las diferencias
+shapiro_pitch_hits = shapiro.test(df_analysis_pitch_hits$diff)
+print(shapiro_pitch_hits)
+```
+//p-value > 0.05 --> Paramétrico//
+
+#### Significancia: T-test 
+```{r}
+# Significancia
+t_test_pitch_hits = t.test(df_analysis_pitch_hits$Post, df_analysis_pitch_hits$Pre, paired = TRUE)
+print(t_test_pitch_hits)
+```
+#### Tamano de efecto: Cohen's D
+```{r}
+# Tamano de efecto
+d_pitch_hits = repeated_measures_d(df_analysis_pitch_hits$Post, df_analysis_pitch_hits$Pre, paired = TRUE)
+print(d_pitch_hits)
+```
+ /// Tamaño de efecto: Pequeno///
+
+#### Potencia
+```{r}
+# Potencia
+power_pitch_hits = pwr.t.test(
+  n = nrow(df_analysis_pitch_hits),
+  d = d_pitch_hits$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_pitch_hits)
+```
+### Análisis de MRT
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_pitch_MRT = data.frame(
+  Pre = T0_pitch$MRT_0,
+  Post = T1_pitch$MRT_1
+)
+
+df_analysis_pitch_MRT$diff = df_analysis_pitch_MRT$Post - df_analysis_pitch_MRT$Pre
+```
+
+#### corroboración: paramétrico o no paramétrico 
+```{r}
+# Normalidad (Shapiro-Wilk)
+## h0 = Distribución normal en las diferencias
+shapiro_pitch_MRT = shapiro.test(df_analysis_pitch_MRT$diff)
+print(shapiro_pitch_MRT)
+```
+//p-value > 0.05 --> Paramétrico//
+
+#### Significancia: T-test 
+```{r}
+# Significancia
+t_test_pitch_MRT = t.test(df_analysis_pitch_MRT$Post, df_analysis_pitch_MRT$Pre, paired = TRUE)
+print(t_test_pitch_MRT)
+```
+#### Tamano de efecto: Cohen's D
+```{r}
+# Tamano de efecto
+d_pitch_MRT = repeated_measures_d(df_analysis_pitch_MRT$Post, df_analysis_pitch_MRT$Pre, paired = TRUE)
+print(d_pitch_MRT)
+```
+ /// Tamaño de efecto: Entre pequeño y mediano///
+
+#### Potencia
+```{r}
+# Potencia
+power_pitch_MRT = pwr.t.test(
+  n = nrow(df_analysis_pitch_MRT),
+  d = d_pitch_MRT$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_pitch_MRT)
+```
+
+### Análisis de Amp_ERP
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_pitch_Amp_ERP = data.frame(
+  Pre = T0_pitch$Amp_ERP_0,
+  Post = T1_pitch$Amp_ERP_1
+)
+
+df_analysis_pitch_Amp_ERP$diff = df_analysis_pitch_Amp_ERP$Post - df_analysis_pitch_Amp_ERP$Pre
+```
+
+#### corroboración: paramétrico o no paramétrico 
+```{r}
+# Normalidad (Shapiro-Wilk)
+## h0 = Distribución normal en las diferencias
+shapiro_pitch_Amp_ERP = shapiro.test(df_analysis_pitch_Amp_ERP$diff)
+print(shapiro_pitch_Amp_ERP)
+```
+
+//p-value > 0.05 --> Paramétrico//
+
+#### Significancia: T-test 
+```{r}
+# Significancia
+t_test_pitch_Amp_ERP = t.test(df_analysis_pitch_Amp_ERP$Post, df_analysis_pitch_Amp_ERP$Pre, paired = TRUE)
+print(t_test_pitch_Amp_ERP)
+```
+#### Tamano de efecto: Cohen's D
+```{r}
+# Tamano de efecto
+d_pitch_Amp_ERP = repeated_measures_d(df_analysis_pitch_Amp_ERP$Post, df_analysis_pitch_Amp_ERP$Pre, paired = TRUE)
+print(d_pitch_Amp_ERP)
+```
+
+ /// Tamaño de efecto: Pequeno///
+
+#### Potencia
+```{r}
+# Potencia
+power_pitch_Amp_ERP = pwr.t.test(
+  n = nrow(df_analysis_pitch_Amp_ERP),
+  d = d_pitch_Amp_ERP$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided")
+print(power_pitch_Amp_ERP)
+```
+### Análisis de Theta
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_pitch_Theta = data.frame(
+  Pre = T0_pitch$Theta_.Relativo._0,
+  Post = T1_pitch$Theta_.Relativo._1
+)
+
+df_analysis_pitch_Theta$diff = df_analysis_pitch_Theta$Post - df_analysis_pitch_Theta$Pre
+```
+
+#### corroboración: paramétrico o no paramétrico 
+```{r}
+# Normalidad (Shapiro-Wilk)
+## h0 = Distribución normal en las diferencias
+shapiro_pitch_Theta = shapiro.test(df_analysis_pitch_Theta$diff)
+print(shapiro_pitch_Theta)
+```
+//p-value > 0.05 --> Paramétrico//
+
+#### Significancia: T-test 
+```{r}
+# Significancia
+t_test_pitch_Theta = t.test(df_analysis_pitch_Theta$Post, df_analysis_pitch_Theta$Pre, paired = TRUE)
+print(t_test_pitch_Theta)
+```
+#### Tamano de efecto: Cohen's D
+```{r}
+# Tamano de efecto
+d_pitch_Theta = repeated_measures_d(df_analysis_pitch_Theta$Post, df_analysis_pitch_Theta$Pre, paired = TRUE)
+print(d_pitch_Theta)
+```
+ 
+ // Tamaño de efecto: Pequeño//
+ 
+```{r}
+#Potencia
+power_pitch_Theta = pwr.t.test(n = nrow(df_analysis_pitch_Theta),
+                               d = d_pitch_Theta$d_rm,
+                               sig.level = 0.05,
+                               power = NULL,
+                               type = "paired",
+                               alternative = "two.sided")
+print(power_pitch_Theta)
+```
+### Alpha power
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_pitch_alpha = data.frame(
+  Pre = T0_pitch$Alpha_power_.Relativo._0,
+  Post = T1_pitch$Alpha_power_.Relativo._1
+)
+
+df_analysis_pitch_alpha$diff = df_analysis_pitch_alpha$Post - df_analysis_pitch_alpha$Pre
+```
+
+#### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = diferencia de datos tienen distribución normal
+
+shapiro_pitch_alpha = shapiro.test(df_analysis_pitch_alpha$diff)
+print(shapiro_pitch_alpha)
+```
+// p-value > 0.05 --> Paramétrico //
+
+### Significancia: T-test
+```{r}
+#T-test
+t_test_pitch_alpha = t.test(df_analysis_pitch_alpha$Post, df_analysis_pitch_alpha$Pre, paired = TRUE)
+print(t_test_pitch_alpha)
+```
+
+#### Tamano de efecto: Cohen's D
+```{r}
+#Cohen's D
+d_pitch_alpha = repeated_measures_d(df_analysis_pitch_alpha$Post, df_analysis_pitch_alpha$Pre, paired = TRUE)
+print(d_pitch_alpha)
+```
+/// Tamano de efecto: Muy pequeno ///
+
+#### Potencia
+```{r}
+#Potencia
+power_pitch_alpha = pwr.t.test(
+  n = nrow(df_analysis_pitch_alpha),
+  d = d_pitch_alpha$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_pitch_alpha)
+```
+
+### Lower beta
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_pitch_beta = data.frame(
+  Pre = T0_pitch$Lower_Beta_power.Relativo._0,
+  Post = T1_pitch$Lower_Beta_power.Relativo._1
+)
+df_analysis_pitch_beta$diff = df_analysis_pitch_beta$Post - df_analysis_pitch_beta$Pre
+```
+
+#### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = Los datos tienen una distribución normal
+shapiro_pitch_beta = shapiro.test(df_analysis_pitch_beta$diff)
+print(shapiro_pitch_beta)
+```
+// p-value > 0.05 --> Paramétrico //
+
+#### Significancia: T-test
+```{r}
+#T-test
+t_test_pitch_beta = t.test(df_analysis_pitch_beta$Post, df_analysis_pitch_beta$Pre, paired = TRUE)
+print(t_test_pitch_beta)
+```
+### Tamano de efecto: Cohen's D
+```{r}
+d_pitch_beta = repeated_measures_d(df_analysis_pitch_beta$Post, df_analysis_pitch_beta$Pre, paired = TRUE)
+print(d_pitch_beta)
+```
+/// tamano de efecto: pequeno ///
+
+### Potencia
+```{r}
+power_pitch_beta = pwr.t.test(
+  n = nrow(df_analysis_pitch_beta),
+  d = d_pitch_alpha$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+
+print(power_pitch_beta)
+```
+# INTENSITY
+
+## Lectura de tablas
+```{r}
+T0_intensity = read.csv("Cz_mean_T0_intensity.csv")
+T1_intensity = read.csv("Cz_mean_T1_intensity.csv")
+#str(T0_intensity)
+#str(T1_intensity)
+names(T0_intensity)
+names(T1_intensity)
+```
+
+### Análisis de HITS
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_intensity_hits = data.frame(
+  Pre = T0_intensity$Hits_0,
+  Post = T1_intensity$Hits_1
+)
+df_analysis_intensity_hits$diff = df_analysis_intensity_hits$Post - df_analysis_intensity_hits$Pre
+```
+
+### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad (Shapiro-Wilk)
+#h0 = datos con distribución normal
+
+shapiro_intensity_hits = shapiro.test(df_analysis_intensity_hits$diff)
+print(shapiro_intensity_hits)
+```
+ /// p-value > 0.05 --> paramétricos ///
+
+### significancia
+```{r}
+#T-test
+t_test_intensity_hits = t.test(df_analysis_intensity_hits$Post, df_analysis_intensity_hits$Pre, paired = TRUE)
+print(t_test_intensity_hits)
+```
+### tamano de efecto
+```{r}
+#Cohen's d
+d_intensity_hits = cohens_d(df_analysis_intensity_hits$Post, df_analysis_intensity_hits$Pre, paired = TRUE)
+print(d_intensity_hits)
+```
+
+/// tamano = pequeno ///
+### potencia
+```{r}
+power_intensity_hits = pwr.t.test(
+  n = nrow(df_analysis_intensity_hits),
+  d = d_intensity_hits$Cohens_d,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_intensity_hits)
+```
+
+### Análisis MRT
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_intensity_MRT = data.frame(
+  Pre = T0_intensity$MRT_0,
+  Post = T1_intensity$MRT_1
+)
+df_analysis_intensity_MRT$diff = df_analysis_intensity_MRT$Post - df_analysis_intensity_MRT$Pre
+```
+
+### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad (Shapiro-Wilk)
+#h0 = datos con distribución normal
+shapiro_intensity_MRT = shapiro.test(df_analysis_intensity_MRT$diff)
+print(shapiro_intensity_MRT)
+```
+/// p-value > 0.05 --> paramétrico ///
+
+### significancia
+```{r}
+#T-test
+t_test_intensity_MRT = t.test(df_analysis_intensity_MRT$Post, df_analysis_intensity_MRT$Pre, paired = TRUE)
+print(t_test_intensity_MRT)
+```
+### tamano de efecto
+```{r}
+#Cohen's D
+d_intensity_MRT = cohens_d(df_analysis_intensity_MRT$Post, df_analysis_intensity_MRT$Pre, paired = TRUE)
+print(d_intensity_MRT)
+```
+/// tamano = pequeno ///
+
+### potencia
+```{r}
+power_intensity_MRT = pwr.t.test(
+  n = nrow(df_analysis_intensity_MRT),
+  d = d_intensity_MRT$Cohens_d,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_intensity_MRT)
+```
+
+### Análisis Amp_ERP
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_intensity_Amp_ERP = data.frame(
+  Pre = T0_intensity$Amp_ERP_0,
+  Post = T1_intensity$Amp_ERP_1
+)
+df_analysis_intensity_Amp_ERP$diff = df_analysis_intensity_Amp_ERP$Post - df_analysis_intensity_Amp_ERP$Pre
+```
+
+#### corroboración paramétrico o no paramétrico
+```{r}
+# Test de normalidad
+# h0 = Los datos tienen distribución normal
+
+shapiro_intensity_Amp_ERP = shapiro.test(df_analysis_intensity_Amp_ERP$diff)
+print(shapiro_intensity_Amp_ERP)
+```
+// p-value > 0.05 --> paramétrico //
+
+#### Significancia
+```{r}
+t_test_intensity_Amp_ERP = t.test(df_analysis_intensity_Amp_ERP$Post, df_analysis_intensity_Amp_ERP$Pre, paired = TRUE)
+print(t_test_intensity_Amp_ERP)
+```
+#### Tamano de efecto
+```{r}
+d_intensity_Amp_ERP = cohens_d(df_analysis_intensity_Amp_ERP$Post, df_analysis_intensity_Amp_ERP$Pre, paired = TRUE)
+print(d_intensity_Amp_ERP)
+```
+// tamano = pequeno ///
+
+#### Potencia
+```{r}
+power_intensity_Amp_ERP = pwr.t.test(
+  n = nrow(df_analysis_intensity_Amp_ERP),
+  d = d_intensity_Amp_ERP$Cohens_d,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_intensity_Amp_ERP)
+```
+### Análisis Theta
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_intensity_Theta = data.frame(
+  Pre = T0_intensity$Theta_.Relativo._0,
+  Post = T1_intensity$Theta_.Relativo._1
+)
+
+df_analysis_intensity_Theta$diff = df_analysis_intensity_Theta$Post - df_analysis_intensity_Theta$Pre
+```
+
+#### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = Datos son normales
+
+shapiro_intensity_Theta = shapiro.test(df_analysis_intensity_Theta$diff)
+print(shapiro_intensity_Theta)
+```
+/// p-value > 0.05 --> paramétrico //
+
+#Significancia 
+```{r}
+t_test_intensity_Theta = t.test(df_analysis_intensity_Theta$Post, df_analysis_intensity_Theta$Pre, paired = TRUE)
+print(t_test_intensity_Theta)
+```
+# Tamano de efecto
+```{r}
+d_intensity_Theta = cohens_d(df_analysis_intensity_Theta$Post, df_analysis_intensity_Theta$Pre, paired = TRUE)
+print(d_intensity_Theta)
+```
+// tamano = pequeno - mediano ///
+
+#Potencia
+```{r}
+power_intensity_Theta = pwr.t.test(
+  n = nrow(df_analysis_intensity_Theta),
+  d = d_intensity_Theta$Cohens_d,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_intensity_Theta)
+```
+
+### Análisis Alpha
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_intensity_alpha = data.frame(
+  Pre = T0_intensity$Alpha_power_.Relativo._0,
+  Post = T1_intensity$Alpha_power_.Relativo._1
+)
+df_analysis_intensity_alpha$diff = df_analysis_intensity_alpha$Post - df_analysis_intensity_alpha$Pre
+```
+
+#### corroborar paramétrico o no paramétricos
+```{r}
+#Test de normalidad
+#h0 = datos distribuidos normalmente
+shapiro_intensity_alpha = shapiro.test(df_analysis_intensity_alpha$diff)
+print(shapiro_intensity_alpha)
+```
+/// p-value > 0.05 --> paramétrico ///
+
+#Significancia 
+```{r}
+t_test_intensity_alpha = t.test(df_analysis_intensity_alpha$Post, df_analysis_intensity_alpha$Pre, paired = TRUE)
+print(t_test_intensity_alpha)
+```
+# Tamano de efecto
+```{r}
+d_intensity_alpha = cohens_d(df_analysis_intensity_alpha$Post, df_analysis_intensity_alpha$Pre, paired = TRUE)
+print(d_intensity_alpha)
+```
+
+/// muy pequeno ///
+
+#Potencia
+```{r}
+power_intensity_alpha = pwr.t.test(
+  n = nrow(df_analysis_intensity_alpha),
+  d = d_intensity_alpha$Cohens_d,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_intensity_alpha)
+```
+### Análisis Beta
+
+#### diferencia entre T0 y T1
+```{r}
+df_analysis_intensity_beta = data.frame(
+  Pre = T0_intensity$Lower_Beta_power.Relativo._0,
+  Post = T1_intensity$Lower_Beta_power.Relativo._1
+)
+df_analysis_intensity_beta$diff = df_analysis_intensity_beta$Post - df_analysis_intensity_beta$Pre
+```
+
+#### corroborar paramétrico o no paramétricos
+```{r}
+#Test de normalidad
+#h0 = datos distribuidos normalmente
+shapiro_intensity_beta = shapiro.test(df_analysis_intensity_beta$diff)
+print(shapiro_intensity_beta)
+```
+
+#### Significancia
+```{r}
+t_test_intensity_beta = t.test(df_analysis_intensity_beta$Post, df_analysis_intensity_beta$Pre, paired = TRUE)
+print(t_test_intensity_beta)
+```
+
+#Tamano de efecto
+```{r}
+d_intensity_beta = cohens_d(df_analysis_intensity_beta$Post, df_analysis_intensity_beta$Pre, paired = TRUE)
+print(d_intensity_beta)
+```
+/// tamano: muy pequeno ///
+
+#Potencia
+```{r}
+power_intensity_beta = pwr.t.test(
+  n = nrow(df_analysis_intensity_beta),
+  d = d_intensity_beta$Cohens_d,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_intensity_beta)
+```
+
+# DURACIÓN
+
+## Lectura de Tablas
+```{r}
+T0_duration = read.csv("Cz_mean_T0_duration.csv")
+T1_duration = read.csv("Cz_mean_T1_duration.csv")
+#str(t0_duration)
+#str(t1_duration)
+```
+
+## Análisis HITS
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_duration_hits = data.frame(
+  Post = T0_duration$Hits_0,
+  Pre = T1_duration$Hits_1
+)
+df_analysis_duration_hits$diff = df_analysis_duration_hits$Post - df_analysis_duration_hits$Pre
+```
+
+### corroboracion paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = Datos tienen distribucion normal
+shapiro_duration_hits = shapiro.test(df_analysis_duration_hits$diff)
+print(shapiro_duration_hits)
+```
+/// p-value < 0.05 --> no paramétricos ///
+
+# Significancia
+```{r}
+#Wilcox test
+wilcox_duration_hits = wilcox.test(df_analysis_duration_hits$Post, df_analysis_duration_hits$Pre, paired = TRUE, exact = FALSE)
+print(wilcox_duration_hits)
+```
+# Tamano de efecto
+```{r}
+rb_duration_hits = rank_biserial(df_analysis_duration_hits$Post, df_analysis_duration_hits$Pre, paired = TRUE)
+print(rb_duration_hits)
+```
+// tamano:   //
+
+#Potencia
+```{r}
+power_duration_hits = pwr.t.test(
+  n = nrow(df_analysis_duration_hits),
+  d = rb_duration_hits$r_rank_biserial,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_duration_hits)
+```
+## Análisis MRT
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_duration_MRT = data.frame(
+  Pre = T0_duration$MRT_0,
+  Post = T1_duration$MRT_1
+)
+df_analysis_duration_MRT$diff = df_analysis_duration_MRT$Post - df_analysis_duration_MRT$Pre
+```
+
+### corroborar paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = distribucion normal de datos
+shapiro_duration_MRT = shapiro.test(df_analysis_duration_MRT$diff)
+print(shapiro_duration_MRT)
+```
+// p-value > 0.05 --> paramétrico //
+
+###Significancia
+```{r}
+#T-test
+t_test_duration_MRT = t.test(df_analysis_duration_MRT$Post, df_analysis_duration_MRT$Pre, paired = TRUE)
+print(t_test_duration_MRT)
+
+```
+###Tamano de efecto
+```{r}
+#Cohen's D
+d_duration_MRT = repeated_measures_d(df_analysis_duration_MRT$Post, df_analysis_duration_MRT$Pre, paired = TRUE)
+print(d_duration_MRT)
+```
+// Tamano de efecto: muy pequeno //
+
+###Potencia
+```{r}
+power_duration_MRT = pwr.t.test(
+  n = nrow(df_analysis_duration_MRT),
+  d = d_duration_MRT$d_rm,
+  sig.level= 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_duration_MRT)
+```
+
+## Análisis Amp_ERP
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_duration_Amp_ERP = data.frame(
+  Pre = T0_duration$Amp_ERP_0,
+  Post = T1_duration$Amp_ERP_1
+)
+df_analysis_duration_Amp_ERP$diff = df_analysis_duration_Amp_ERP$Post - df_analysis_duration_Amp_ERP$Pre
+```
+
+### corroborar paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+# H0 = distribución normal de los datos
+shapiro_duration_Amp_ERP = shapiro.test(df_analysis_duration_Amp_ERP$diff)
+print(shapiro_duration_Amp_ERP)
+```
+/// p-value > 0.05 --> paramétrico ///
+
+### Significancia
+```{r}
+#T-test
+t_test_duration_Amp_ERP = t.test(df_analysis_duration_Amp_ERP$Post, df_analysis_duration_Amp_ERP$Pre, paired = TRUE)
+print(t_test_duration_Amp_ERP)
+```
+### Tamano de efecto
+```{r}
+d_duration_Amp_ERP = repeated_measures_d(df_analysis_duration_Amp_ERP$Post, df_analysis_duration_Amp_ERP$Pre, paired = TRUE)
+print(d_duration_Amp_ERP)
+```
+
+/// muy pequeno ///
+
+###Potencia
+```{r}
+power_duration_Amp_ERP = pwr.t.test(
+  n = nrow(df_analysis_duration_Amp_ERP),
+  d = d_duration_Amp_ERP$Cohens_d,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_duration_Amp_ERP)
+```
+
+## Análisis Theta
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_duration_theta = data.frame(
+  Pre = T0_duration$Theta_.Relativo._0,
+  Post = T1_duration$Theta_.Relativo._1
+)
+df_analysis_duration_theta$diff = df_analysis_duration_theta$Post - df_analysis_duration_theta$Pre
+```
+
+### corroborar paramétricos o no paramétricos
+```{r}
+# Test de normalidad
+# H0 = datos distribuidos normalmente
+shapiro_duration_theta = shapiro.test(df_analysis_duration_theta$diff)
+print(shapiro_duration_theta)
+```
+/// paramétrico ///
+
+### Significancia
+```{r}
+#T-test
+t_test_duration_theta = t.test(df_analysis_duration_theta$Post, df_analysis_duration_theta$Pre, paired = TRUE)
+print(t_test_duration_theta)
+```
+
+### Tamano de efecto
+```{r}
+d_duration_theta = repeated_measures_d(df_analysis_duration_theta$Post, df_analysis_duration_theta$Pre, paired = TRUE)
+print(d_duration_theta)
+```
+
+// pequeno //
+
+### Potencia
+```{r}
+power_duration_theta = pwr.t.test(
+  n = nrow(df_analysis_duration_theta),
+  d = d_duration_theta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_duration_theta)
+```
+
+## Análisis de Alpha
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_duration_alpha = data.frame(
+  Pre = T0_duration$Alpha_power_.Relativo._0,
+  Post = T1_duration$Alpha_power_.Relativo._1
+)
+df_analysis_duration_alpha$diff = df_analysis_duration_alpha$Post - df_analysis_duration_alpha$Pre
+```
+
+
+### corroborar paramétrico o no paramétrico
+```{r}
+# Test de normalidad
+#H0 = datos en distribución normal
+shapiro_duration_alpha = shapiro.test(df_analysis_duration_alpha$diff)
+print(shapiro_duration_alpha)
+```
+/// paramétrico ///
+
+### Significancia
+```{r}
+t_test_duration_alpha = t.test(df_analysis_duration_alpha$Post, df_analysis_duration_alpha$Pre, paired = TRUE)
+print(t_test_duration_alpha)
+```
+
+### Tamano de efecto
+```{r}
+d_duration_alpha = repeated_measures_d(df_analysis_duration_alpha$Post, df_analysis_duration_alpha$Pre, paired = TRUE)
+print(d_duration_alpha)
+```
+/// muy pequeno ///
+
+### Potencia
+```{r}
+power_duration_alpha = pwr.t.test(
+  n = nrow(df_analysis_duration_alpha),
+  d = d_duration_alpha$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_duration_alpha)
+```
+
+## Análisis de Lower Beta
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_duration_beta = data.frame(
+  Pre = T0_duration$Lower_Beta_power.Relativo._0,
+  Post = T1_duration$Lower_Beta_power.Relativo._1
+)
+df_analysis_duration_beta$diff = df_analysis_duration_beta$Post - df_analysis_duration_beta$Pre
+```
+
+### corroborar paramétricos o no paramétricos
+```{r}
+#Test de normalidad
+#H0 = distribución normal de los datos
+shapiro_duracion_beta = shapiro.test(df_analysis_duration_beta$diff)
+print(shapiro_duracion_beta)
+```
+// paramétricos //
+
+### Significancia
+```{r}
+#T-test
+t_test_duration_beta = t.test(df_analysis_duration_beta$Post, df_analysis_duration_beta$Pre, paired = TRUE)
+print(t_test_duration_beta)
+```
+### Tamano de efecto
+```{r}
+d_duration_beta = repeated_measures_d(df_analysis_duration_beta$Post, df_analysis_duration_beta$Pre, paired = TRUE)
+print(d_duration_beta)
+```
+/// pequeno - mediano ///
+
+### Potencia
+```{r}
+power_duration_beta = pwr.t.test(
+  n = nrow(df_analysis_duration_beta),
+  d = d_duration_beta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_duration_beta)
+```
+# POSICIÓN
+
+## Lectura de tablas
+```{r}
+T0_position = read.csv("Cz_mean_T0_position.csv")
+T1_position = read.csv("Cz_mean_T1_position.csv")
+#str(T0_position)
+#str(T1_position)
+```
+
+## Análisis HITS
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_position_hits = data.frame(
+  Pre = T0_position$Hits_0,
+  Post = T1_position$Hits_1
+)
+df_analysis_position_hits$diff = df_analysis_position_hits$Post - df_analysis_position_hits$Pre
+```
+
+### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = datos distribuidos normalmente
+shapiro_position_hits = shapiro.test(df_analysis_position_hits$diff)
+print(shapiro_position_hits)
+```
+// paramétrico //
+
+## Significancia
+```{r}
+t_test_position_hits = t.test(df_analysis_position_hits$Post, df_analysis_position_hits$Pre, paired = TRUE)
+print(t_test_position_hits)
+```
+
+## Tamano de efecto
+```{r}
+d_position_hits = repeated_measures_d(df_analysis_position_hits$Post, df_analysis_position_hits$Pre, paired = TRUE)
+print(d_position_hits)
+```
+// pequeno/
+
+##Potencia
+```{r}
+power_position_hits = pwr.t.test(
+  n = nrow(df_analysis_position_hits),
+  d = d_position_hits$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_position_hits)
+```
+
+## Análisis MRT
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_position_MRT = data.frame(
+  Pre = T0_position$MRT_0,
+  Post = T1_position$MRT_1
+)
+df_analysis_position_MRT$diff = df_analysis_position_MRT$Post - df_analysis_position_MRT$Pre
+```
+
+### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = datos distribuidos normalmente
+shapiro_position_MRT = shapiro.test(df_analysis_position_MRT$diff)
+print(shapiro_position_MRT)
+```
+ // NO PARAMÉTRICOS //
+ 
+### Significancia
+```{r}
+#wilcox
+wilcox_position_MRT = wilcox.test(df_analysis_position_MRT$Post, df_analysis_position_MRT$Pre, paired = TRUE,exact = FALSE) 
+print(wilcox_position_MRT)
+```
+### Tamano de efecto
+```{r}
+rb_position_MRT = rank_biserial(df_analysis_position_MRT$Post, df_analysis_position_MRT$Pre, paired = TRUE)
+print(rb_position_MRT)
+```
+/// muy pequeno ///
+
+### Potencia
+```{r}
+power_position_MRT = pwr.t.test(
+  n = nrow(df_analysis_position_MRT),
+  d = rb_position_MRT$r_rank_biserial,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_position_MRT)
+```
+
+## Análisis Amp_ERP
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_position_Amp_ERP = data.frame(
+  Pre = T0_position$Amp_ERP_0,
+  Post = T1_position$Amp_ERP_1
+)
+df_analysis_position_Amp_ERP$diff = df_analysis_position_Amp_ERP$Post - df_analysis_position_Amp_ERP$Pre
+```
+
+### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = datos distribuidos normalmente
+shapiro_position_Amp_ERP = shapiro.test(df_analysis_position_Amp_ERP$diff)
+print(shapiro_position_Amp_ERP)
+```
+// paramétrico //
+
+### Significancia
+```{r}
+#t-test
+t_test_position_Amp_ERP = t.test(df_analysis_position_Amp_ERP$Post, df_analysis_position_Amp_ERP$Pre, paired = TRUE)
+print(t_test_position_Amp_ERP)
+```
+
+### Tamano de efecto
+```{r}
+d_position_Amp_ERP = repeated_measures_d(df_analysis_position_Amp_ERP$Post, df_analysis_position_Amp_ERP$Pre, paired = TRUE)
+print(d_position_Amp_ERP)
+```
+/// pequenito ///
+
+### Potencia
+```{r}
+power_position_Amp_ERP = pwr.t.test(
+  n = nrow(df_analysis_position_Amp_ERP),
+  d = d_position_Amp_ERP$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_position_Amp_ERP)
+```
+
+## Análisis de Theta
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_position_theta = data.frame(
+  Pre = T0_position$Theta_.Relativo._0,
+  Post = T1_position$Theta_.Relativo._1
+)
+df_analysis_position_theta$diff = df_analysis_position_theta$Post - df_analysis_position_theta$Pre
+```
+
+### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = datos distribuidos normalmente
+shapiro_position_theta = shapiro.test(df_analysis_position_theta$diff)
+print(shapiro_position_theta)
+```
+// paramétrico//
+
+#Significancia
+```{r}
+t_test_position_theta = t.test(df_analysis_position_theta$Post, df_analysis_position_theta$Pre, paired = TRUE)
+print(t_test_position_theta)
+```
+### Tamano de efecto
+```{r}
+d_position_theta = repeated_measures_d(df_analysis_position_theta$Post, df_analysis_position_theta$Pre, paired = TRUE)
+print(d_position_theta)
+```
+// pequeno //
+
+### Potencia
+```{r}
+power_position_theta = pwr.t.test(
+  n = nrow(df_analysis_position_theta),
+  d = d_position_theta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_position_theta)
+```
+
+## Análisis Alpha
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_position_alpha = data.frame(
+  Pre = T0_position$Alpha_power_.Relativo._0,
+  Post = T1_position$Alpha_power_.Relativo._1
+)
+df_analysis_position_alpha$diff = df_analysis_position_alpha$Post - df_analysis_position_alpha$Pre
+```
+
+### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = datos distribuidos normalmente
+shapiro_position_alpha = shapiro.test(df_analysis_position_alpha$diff)
+print(shapiro_position_alpha)
+```
+// paramétrico //
+
+### Significancia
+```{r}
+# T-test
+t_test_position_alpha = t.test(df_analysis_position_alpha$Post, df_analysis_position_alpha$Pre, paired = TRUE)
+print(t_test_position_alpha)
+```
+
+### Tamano de efecto
+```{r}
+d_position_alpha = repeated_measures_d(df_analysis_position_alpha$Post, df_analysis_position_alpha$Pre, paired = TRUE)
+print(d_position_alpha)
+```
+// pequeno//
+
+### Potencia
+```{r}
+power_position_alpha = pwr.t.test(
+  n = nrow(df_analysis_position_alpha),
+  d = d_position_alpha$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_position_alpha)
+```
+## Análisis Beta
+
+### diferencia entre T0 y T1
+```{r}
+df_analysis_position_beta = data.frame(
+  Pre = T0_position$Lower_Beta_power.Relativo._0,
+  Post = T1_position$Lower_Beta_power.Relativo._1
+)
+df_analysis_position_beta$diff = df_analysis_position_beta$Post - df_analysis_position_beta$Pre
+```
+
+### corroboración paramétrico o no paramétrico
+```{r}
+#Test de normalidad
+#h0 = datos distribuidos normalmente
+shapiro_position_beta = shapiro.test(df_analysis_position_beta$diff)
+print(shapiro_position_beta)
+```
+// paramétrico //
+
+### Significancia
+```{r}
+t_test_position_beta = t.test(df_analysis_position_beta$Post, df_analysis_position_beta$Pre, paired = TRUE)
+print(t_test_position_beta)
+```
+### Tamano de efecto
+```{r}
+d_position_beta = repeated_measures_d(df_analysis_position_beta$Post, df_analysis_position_beta$Pre, paired = TRUE)
+print(d_position_beta)
+```
+ // pequeno - mediano //
+ 
+### Potencia
+```{r}
+power_position_beta = pwr.t.test(
+  n = nrow(df_analysis_position_beta),
+  d = d_position_beta$d_rm,
+  sig.level = 0.05,
+  power = NULL,
+  type = "paired",
+  alternative = "two.sided"
+)
+print(power_position_beta)
+```
